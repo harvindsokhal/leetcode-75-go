@@ -6,6 +6,7 @@ import (
 
 	"github.com/harvindsokhal/leetcode-75-go/internal/generator"
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
+	"github.com/harvindsokhal/leetcode-75-go/internal/tracker"
 )
 
 func main() {
@@ -24,6 +25,57 @@ func main() {
 		}
 
 		fmt.Println("Generated problem folders.")
+
+	case "start":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: lc75 start <problem-slug>")
+			os.Exit(1)
+		}
+
+		slug := os.Args[2]
+
+		if err := tracker.Start(slug); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+		fmt.Println("Started:", slug)
+
+	case "finish":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: lc75 finish <problem-slug>")
+			os.Exit(1)
+		}
+
+		slug := os.Args[2]
+
+		if err := tracker.Finish(slug); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+		fmt.Println("Finished:", slug)
+
+	case "status":
+		if err := tracker.Status(); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+	case "in-progress":
+
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: lc75 start <problem-slug>")
+			os.Exit(1)
+		}
+
+		slug := os.Args[2]
+
+		if err := tracker.In_progress(slug); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
 	default:
 		fmt.Println("Unknown command:", command)
 		os.Exit(1)
