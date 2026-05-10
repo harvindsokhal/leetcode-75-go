@@ -119,8 +119,17 @@ func main() {
 			os.Exit(1)
 		}
 
+	case "help":
+		fmt.Println("  list                  List all problems")
+		printHelp()
+
+	case "list":
+		printProblems()
+
 	default:
 		fmt.Println("Unknown command:", command)
+		fmt.Println()
+		printHelp()
 		os.Exit(1)
 	}
 }
@@ -137,4 +146,28 @@ func printProblems() {
 			problem.Category,
 		)
 	}
+}
+
+func printHelp() {
+	fmt.Println("LeetCode 75 CLI")
+	fmt.Println()
+	fmt.Println("Usage:")
+	fmt.Println("  lc75 <command> [args]")
+	fmt.Println()
+	fmt.Println("Commands:")
+	fmt.Println("  init                  Generate folders/files for all problems")
+	fmt.Println("  start <slug>           Start timer for a problem")
+	fmt.Println("  finish <slug>          Finish timer for a problem")
+	fmt.Println("  status                 Show current progress")
+	fmt.Println("  stats                  Show detailed stats")
+	fmt.Println("  test <slug>            Run Go tests for a problem")
+	fmt.Println("  commit <slug>          Commit a completed problem")
+	fmt.Println("  push                   Push commits to remote")
+	fmt.Println("  help                   Show this help message")
+	fmt.Println()
+	fmt.Println("Examples:")
+	fmt.Println("  lc75 start merge-strings-alternately")
+	fmt.Println("  lc75 test merge-strings-alternately")
+	fmt.Println("  lc75 finish merge-strings-alternately")
+	fmt.Println("  lc75 commit merge-strings-alternately")
 }

@@ -139,11 +139,14 @@ func Status() error {
 		}
 	}
 
+	total := len(problems.All())
+
 	fmt.Println("LeetCode 75 Progress")
 	fmt.Println("--------------------")
-	fmt.Printf("Completed: %d/75\n", completed)
+
+	fmt.Printf("Completed: %d/%d\n", completed, total)
 	fmt.Printf("In Progress: %d\n", inProgress)
-	fmt.Printf("Remaining: %d\n", 75-completed)
+	fmt.Printf("Remaining: %d\n", total-completed)
 
 	return nil
 }
@@ -194,11 +197,12 @@ func Stats() error {
 		}
 	}
 
-	remaining := 75 - completed
+	total := len(problems.All())
+	remaining := total - completed
 
 	fmt.Println("LeetCode 75 Stats")
 	fmt.Println("-----------------")
-	fmt.Printf("Completed: %d/75\n", completed)
+	fmt.Printf("Completed: %d/%d\n", completed, total)
 	fmt.Printf("In Progress: %d\n", inProgress)
 	fmt.Printf("Remaining: %d\n", remaining)
 
