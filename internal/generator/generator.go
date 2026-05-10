@@ -20,7 +20,7 @@ func GenerateAll() error {
 }
 
 func GenerateProblem(problem problems.Problem) error {
-	folderName := fmt.Sprintf("%03d-%s", problem.Number, problem.Slug)
+	folderName := problems.FolderName(problem)
 	folderPath := filepath.Join("problems", folderName)
 
 	if err := os.MkdirAll(folderPath, 0o755); err != nil {
@@ -75,14 +75,14 @@ Space:
 }
 
 func solutionTemplate(problem problems.Problem) string {
-	return fmt.Sprintf(`package main
+	return fmt.Sprintf(`package solution
 
 // TODO: Implement solution for %s.
 `, problem.Title)
 }
 
 func testTemplate(problem problems.Problem) string {
-	return fmt.Sprintf(`package main
+	return fmt.Sprintf(`package solution
 
 import "testing"
 

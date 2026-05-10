@@ -6,6 +6,7 @@ import (
 
 	"github.com/harvindsokhal/leetcode-75-go/internal/generator"
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
+	"github.com/harvindsokhal/leetcode-75-go/internal/runner"
 	"github.com/harvindsokhal/leetcode-75-go/internal/tracker"
 )
 
@@ -72,6 +73,18 @@ func main() {
 		slug := os.Args[2]
 
 		if err := tracker.In_progress(slug); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+	case "test":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: lc75 test <problem-slug>")
+		}
+
+		slug := os.Args[2]
+
+		if err := runner.Test(slug); err != nil {
 			fmt.Println("Error:", err)
 			os.Exit(1)
 		}
