@@ -113,6 +113,12 @@ func main() {
 
 		fmt.Println("Pushed changes.")
 
+	case "stats":
+		if err := tracker.Stats(); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
 	default:
 		fmt.Println("Unknown command:", command)
 		os.Exit(1)

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
 )
 
 const ProgressFile = "progress.json"
@@ -144,4 +146,96 @@ func Status() error {
 	fmt.Printf("Remaining: %d\n", 75-completed)
 
 	return nil
+}
+
+func Stats() error {
+	progress, err := Load()
+	if err != nil {
+		return err
+	}
+
+	completed := 0
+	inProgress := 0
+	totalMinutes := 0
+	fastest := 0
+	slowest := 0
+
+	difficultyTotals := map[string]int{}
+	difficultyCompleted := map[string]int{}
+
+	for _, problem := range problems.All() {
+		difficultyTotals[problem.Difficulty]++
+	}
+
+	for _, item := range progress {
+		switch item.Status {
+		case "completed":
+			completed++
+
+			problem, ok := problems.FindBySlug(item.Slug)
+			if ok {
+				difficultyCompleted[problem.Difficulty]++
+			}
+
+			if item.DurationMinutes > 0 {
+				totalMinutes += item.DurationMinutes
+
+				if fastest == 0 || item.DurationMinutes < fastest {
+					fastest = item.DurationMinutes
+				}
+
+				if item.DurationMinutes > slowest {
+					slowest = item.DurationMinutes
+				}
+			}
+
+		case "in_progress":
+			inProgress++
+		}
+	}
+
+	remaining := 75 - completed
+
+	fmt.Println("LeetCode 75 Stats")
+	fmt.Println("-----------------")
+	fmt.Printf("Completed: %d/75\n", completed)
+	fmt.Printf("In Progress: %d\n", inProgress)
+	fmt.Printf("Remaining: %d\n", remaining)
+
+	fmt.Println()
+	fmt.Println("By Difficulty")
+	fmt.Println("-------------")
+	fmt.Printf("Easy: %d/%d\n", difficultyCompleted["Easy"], difficultyTotals["Easy"])
+	fmt.Printf("Medium: %d/%d\n", difficultyCompleted["Medium"], difficultyTotals["Medium"])
+	fmt.Printf("Hard: %d/%d\n", difficultyCompleted["Hard"], difficultyTotals["Hard"])
+
+	fmt.Println()
+
+	if completed == 0 || totalMinutes == 0 {
+		fmt.Println("No completed solve times yet.")
+		return nil
+	}
+
+	average := totalMinutes / completed
+
+	fmt.Printf("Average solve time: %s\n", formatMinutes(average))
+	fmt.Printf("Fastest solve: %s\n", formatMinutes(fastest))
+	fmt.Printf("Slowest solve: %s\n", formatMinutes(slowest))
+
+	return nil
+}
+
+func formatMinutes(minutes int) string {
+	if minutes < 60 {
+		return fmt.Sprintf("%dm", minutes)
+	}
+
+	hours := minutes / 60
+	remainingMinutes := minutes % 60
+
+	if remainingMinutes == 0 {
+		return fmt.Sprintf("%dh", hours)
+	}
+
+	return fmt.Sprintf("%dh %dm", hours, remainingMinutes)
 }
