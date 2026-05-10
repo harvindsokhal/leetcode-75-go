@@ -105,6 +105,14 @@ func main() {
 
 		fmt.Println("Commited:", slug)
 
+	case "push":
+		if err := githelper.Push(); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+		fmt.Println("Pushed changes.")
+
 	default:
 		fmt.Println("Unknown command:", command)
 		os.Exit(1)

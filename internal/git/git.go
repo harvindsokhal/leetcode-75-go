@@ -38,3 +38,7 @@ func runGit(args ...string) error {
 
 	return cmd.Run()
 }
+
+func Push() error {
+	return runGit("push")
+}
