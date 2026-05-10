@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/harvindsokhal/leetcode-75-go/internal/generator"
+	githelper "github.com/harvindsokhal/leetcode-75-go/internal/git"
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
 	"github.com/harvindsokhal/leetcode-75-go/internal/runner"
 	"github.com/harvindsokhal/leetcode-75-go/internal/tracker"
@@ -88,6 +89,21 @@ func main() {
 			fmt.Println("Error:", err)
 			os.Exit(1)
 		}
+
+	case "commit":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: lc75 commit <problem-slug>")
+			os.Exit(1)
+		}
+
+		slug := os.Args[2]
+
+		if err := githelper.CommitProblem(slug); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+		fmt.Println("Commited:", slug)
 
 	default:
 		fmt.Println("Unknown command:", command)
