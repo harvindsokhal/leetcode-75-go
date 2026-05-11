@@ -1,8 +1,14 @@
 {
+  "current": {
+    "slug": "current",
+    "status": "in_progress",
+    "started_at": "2026-05-11T18:04:53.960099585+01:00"
+  },
   "merge-strings-alternately": {
     "slug": "merge-strings-alternately",
-    "status": "in_progress",
+    "status": "completed",
     "started_at": "2026-05-10T11:26:50.770493993+01:00",
-    "duration_minutes": 14
+    "finished_at": "2026-05-11T18:04:24.770833542+01:00",
+    "duration_minutes": 1837
   }
 }

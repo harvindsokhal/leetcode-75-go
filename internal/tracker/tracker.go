@@ -61,6 +61,15 @@ func Start(slug string) error {
 
 	now := time.Now()
 
+	activeSlug, hasActive, err := HasActiveProblem()
+	if err != nil {
+		return err
+	}
+
+	if hasActive && activeSlug != slug {
+		return fmt.Errorf("another problem is already in progress: %s", activeSlug)
+	}
+
 	current, exists := progress[slug]
 	if exists && current.StartedAt != nil && current.FinishedAt == nil {
 		return fmt.Errorf("problem %q is already in progress", slug)
@@ -338,4 +347,33 @@ func NextSlug() (string, error) {
 	}
 
 	return "", fmt.Errorf("all problems completed")
+}
+
+func IsCompleted(slug string) (bool, error) {
+	progress, err := Load()
+	if err != nil {
+		return false, err
+	}
+
+	item, exists := progress[slug]
+	if !exists {
+		return false, nil
+	}
+
+	return item.Status == "completed", nil
+}
+
+func HasActiveProblem() (string, bool, error) {
+	progress, err := Load()
+	if err != nil {
+		return "", false, err
+	}
+
+	for _, item := range progress {
+		if item.Status == "in_progress" {
+			return item.Slug, true, nil
+		}
+	}
+
+	return "", false, nil
 }

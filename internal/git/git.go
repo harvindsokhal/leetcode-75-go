@@ -8,6 +8,7 @@ import (
 
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
 	"github.com/harvindsokhal/leetcode-75-go/internal/resolver"
+	"github.com/harvindsokhal/leetcode-75-go/internal/tracker"
 )
 
 func CommitProblem(slug string) error {
@@ -19,6 +20,15 @@ func CommitProblem(slug string) error {
 	problem, ok := problems.FindBySlug(resolvedSlug)
 	if !ok {
 		return fmt.Errorf("problem %q not found", slug)
+	}
+
+	completed, err := tracker.IsCompleted(problem.Slug)
+	if err != nil {
+		return err
+	}
+
+	if !completed {
+		return fmt.Errorf("problem %q is not completed yet. Run lc75 finish %s first", problem.Slug, problem.Slug)
 	}
 
 	folder := problems.FolderName(problem)

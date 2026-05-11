@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/harvindsokhal/leetcode-75-go/internal/checker"
 	"github.com/harvindsokhal/leetcode-75-go/internal/generator"
 	githelper "github.com/harvindsokhal/leetcode-75-go/internal/git"
 	"github.com/harvindsokhal/leetcode-75-go/internal/opener"
@@ -57,6 +58,11 @@ func main() {
 		slug, err := resolver.Resolve(target)
 		if err != nil {
 			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+		if err := checker.Check(slug); err != nil {
+			fmt.Println("Cannot finish because checks failed.")
 			os.Exit(1)
 		}
 
@@ -170,6 +176,19 @@ func main() {
 			os.Exit(1)
 		}
 
+	case "check":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: lc75 check <slug|current>")
+			os.Exit(1)
+		}
+
+		target := os.Args[2]
+
+		if err := checker.Check(target); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
 	default:
 		fmt.Println("Unknown command:", command)
 		fmt.Println()
@@ -211,6 +230,7 @@ func printHelp() {
 	fmt.Println("  commit <slug|current>      Commit a completed problem")
 	fmt.Println("  stats                  Show detailed stats")
 	fmt.Println("  push                   Push commits to remote")
+	fmt.Println("  check <slug|current>      Run go fmt and tests for a problem")
 	fmt.Println("  help                   Show this help message")
 	fmt.Println()
 	fmt.Println("Examples:")
