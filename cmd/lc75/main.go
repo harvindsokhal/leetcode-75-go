@@ -126,6 +126,18 @@ func main() {
 	case "list":
 		printProblems()
 
+	case "current":
+		if err := tracker.Current(); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
+	case "next":
+		if err := tracker.Next(); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
 	default:
 		fmt.Println("Unknown command:", command)
 		fmt.Println()
@@ -158,6 +170,8 @@ func printHelp() {
 	fmt.Println("  init                  Generate folders/files for all problems")
 	fmt.Println("  start <slug>           Start timer for a problem")
 	fmt.Println("  finish <slug>          Finish timer for a problem")
+	fmt.Println("  current               Show current in-progress problem")
+	fmt.Println("  next                  Show next unsolved problem")
 	fmt.Println("  status                 Show current progress")
 	fmt.Println("  stats                  Show detailed stats")
 	fmt.Println("  test <slug>            Run Go tests for a problem")

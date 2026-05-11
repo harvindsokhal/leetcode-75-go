@@ -243,3 +243,69 @@ func formatMinutes(minutes int) string {
 
 	return fmt.Sprintf("%dh %dm", hours, remainingMinutes)
 }
+
+func Current() error {
+	progress, err := Load()
+	if err != nil {
+		return err
+	}
+
+	for _, item := range progress {
+		if item.Status == "in_progress" {
+			problem, ok := problems.FindBySlug(item.Slug)
+			if !ok {
+				fmt.Println(item.Slug)
+				return nil
+			}
+
+			fmt.Println("Current problem")
+			fmt.Println("---------------")
+			fmt.Printf("%03d. %s [%s] - %s\n",
+				problem.Number,
+				problem.Title,
+				problem.Difficulty,
+				problem.Category,
+			)
+			fmt.Printf("Slug: %s\n", problem.Slug)
+			fmt.Printf("Link: https://leetcode.com/problems/%s/\n", problem.Slug)
+
+			if item.StartedAt != nil {
+				elapsed := int(time.Since(*item.StartedAt).Minutes())
+				fmt.Printf("Elapsed: %s\n", formatMinutes(elapsed))
+			}
+
+			return nil
+		}
+	}
+
+	fmt.Println("No problem currently in progress.")
+	return nil
+}
+
+func Next() error {
+	progress, err := Load()
+	if err != nil {
+		return err
+	}
+
+	for _, problem := range problems.All() {
+		item, exists := progress[problem.Slug]
+
+		if !exists || item.Status != "completed" {
+			fmt.Println("Next problem")
+			fmt.Println("------------")
+			fmt.Printf("%03d. %s [%s] - %s\n",
+				problem.Number,
+				problem.Title,
+				problem.Difficulty,
+				problem.Category,
+			)
+			fmt.Printf("Slug: %s\n", problem.Slug)
+			fmt.Printf("Link: https://leetcode.com/problems/%s/\n", problem.Slug)
+			return nil
+		}
+	}
+
+	fmt.Println("All problems completed.")
+	return nil
+}
