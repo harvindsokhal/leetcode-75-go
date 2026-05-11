@@ -7,6 +7,7 @@ import (
 	"runtime"
 
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
+	"github.com/harvindsokhal/leetcode-75-go/internal/resolver"
 	"github.com/harvindsokhal/leetcode-75-go/internal/tracker"
 )
 
@@ -15,7 +16,7 @@ type Options struct {
 }
 
 func Open(target string, opts Options) error {
-	slug, err := resolveSlug(target)
+	slug, err := resolver.Resolve(target)
 	if err != nil {
 		return err
 	}
@@ -47,17 +48,6 @@ func Open(target string, opts Options) error {
 	}
 
 	return openTmuxWorkspace(problem, solutionPath, readmePath, testPath)
-}
-
-func resolveSlug(target string) (string, error) {
-	switch target {
-	case "next":
-		return tracker.NextSlug()
-	case "current":
-		return tracker.CurrentSlug()
-	default:
-		return target, nil
-	}
 }
 
 func openBrowser(target string) error {

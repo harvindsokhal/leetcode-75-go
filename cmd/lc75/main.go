@@ -8,6 +8,7 @@ import (
 	githelper "github.com/harvindsokhal/leetcode-75-go/internal/git"
 	"github.com/harvindsokhal/leetcode-75-go/internal/opener"
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
+	"github.com/harvindsokhal/leetcode-75-go/internal/resolver"
 	"github.com/harvindsokhal/leetcode-75-go/internal/runner"
 	"github.com/harvindsokhal/leetcode-75-go/internal/solver"
 	"github.com/harvindsokhal/leetcode-75-go/internal/tracker"
@@ -51,14 +52,17 @@ func main() {
 			os.Exit(1)
 		}
 
-		slug := os.Args[2]
+		target := os.Args[2]
 
-		if err := tracker.Finish(slug); err != nil {
+		slug, err := resolver.Resolve(target)
+		if err != nil {
 			fmt.Println("Error:", err)
 			os.Exit(1)
 		}
 
-		fmt.Println("Finished:", slug)
+		if err := tracker.Finish(slug); err != nil {
+			fmt.Println("Finished:", slug)
+		}
 
 	case "status":
 		if err := tracker.Status(); err != nil {
@@ -197,15 +201,15 @@ func printHelp() {
 	fmt.Println("Commands:")
 	fmt.Println("  init                  Generate folders/files for all problems")
 	fmt.Println("  start <slug>           Start timer for a problem")
-	fmt.Println("  finish <slug>          Finish timer for a problem")
 	fmt.Println("  current               Show current in-progress problem")
 	fmt.Println("  next                  Show next unsolved problem")
 	fmt.Println("  solve <slug|next|current> Start timer and open tmux workspace")
 	fmt.Println("  open <slug|next|current>  Resume problem tmux workspace without starting timer")
 	fmt.Println("  status                 Show current progress")
+	fmt.Println("  test <slug|current|next>   Run Go tests for a problem")
+	fmt.Println("  finish <slug|current>      Finish timer for a problem")
+	fmt.Println("  commit <slug|current>      Commit a completed problem")
 	fmt.Println("  stats                  Show detailed stats")
-	fmt.Println("  test <slug>            Run Go tests for a problem")
-	fmt.Println("  commit <slug>          Commit a completed problem")
 	fmt.Println("  push                   Push commits to remote")
 	fmt.Println("  help                   Show this help message")
 	fmt.Println()

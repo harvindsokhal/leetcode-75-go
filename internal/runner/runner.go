@@ -6,10 +6,16 @@ import (
 	"os/exec"
 
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
+	"github.com/harvindsokhal/leetcode-75-go/internal/resolver"
 )
 
 func Test(slug string) error {
-	problem, ok := problems.FindBySlug(slug)
+	resolvedSlug, err := resolver.Resolve(slug)
+	if err != nil {
+		return err
+	}
+
+	problem, ok := problems.FindBySlug(resolvedSlug)
 	if !ok {
 		return fmt.Errorf("problem %q not found", slug)
 	}
