@@ -6,6 +6,7 @@ import (
 
 	"github.com/harvindsokhal/leetcode-75-go/internal/generator"
 	githelper "github.com/harvindsokhal/leetcode-75-go/internal/git"
+	"github.com/harvindsokhal/leetcode-75-go/internal/opener"
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
 	"github.com/harvindsokhal/leetcode-75-go/internal/runner"
 	"github.com/harvindsokhal/leetcode-75-go/internal/tracker"
@@ -138,6 +139,19 @@ func main() {
 			os.Exit(1)
 		}
 
+	case "open":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: lc75 open <problem-slug|next|current>")
+			os.Exit(1)
+		}
+
+		target := os.Args[2]
+
+		if err := opener.Open(target); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+
 	default:
 		fmt.Println("Unknown command:", command)
 		fmt.Println()
@@ -172,6 +186,7 @@ func printHelp() {
 	fmt.Println("  finish <slug>          Finish timer for a problem")
 	fmt.Println("  current               Show current in-progress problem")
 	fmt.Println("  next                  Show next unsolved problem")
+	fmt.Println("  open <slug|next|current> Open problem folder and LeetCode page")
 	fmt.Println("  status                 Show current progress")
 	fmt.Println("  stats                  Show detailed stats")
 	fmt.Println("  test <slug>            Run Go tests for a problem")
