@@ -1,9 +1,9 @@
-package opener
+package solver
 
 import "github.com/harvindsokhal/leetcode-75-go/internal/workspace"
 
-func Open(target string) error {
+func Solve(target string) error {
 	return workspace.Open(target, workspace.Options{
-		StartTimer: false,
+		StartTimer: true,
 	})
 }
