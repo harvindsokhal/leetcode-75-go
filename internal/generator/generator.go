@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/harvindsokhal/leetcode-75-go/internal/problems"
 )
@@ -51,7 +52,7 @@ func GenerateProblem(problem problems.Problem) error {
 }
 
 func readmeTemplate(problem problems.Problem) string {
-	return fmt.Sprintf(`# %s
+	return fmt.Sprintf(`# %03d. %s
 
 ## Difficulty
 %s
@@ -62,45 +63,68 @@ func readmeTemplate(problem problems.Problem) string {
 ## Link
 https://leetcode.com/problems/%s/
 
-## Problem
-TODO: Add problem summary.
+## Function
+%s
+
+## Problem Summary
+TODO: Summarise the problem in your own words.
+
+## Examples
+TODO: Add examples from LeetCode.
 
 ## Approach
-TODO: Write your thinking here.
+TODO: Explain your thinking before coding.
+
+## Edge Cases
+- TODO
 
 ## Complexity
 Time:
 Space:
-`, problem.Title, problem.Difficulty, problem.Category, problem.Slug)
+
+## Reflection
+What did I learn?
+`, problem.Number, problem.Title, problem.Difficulty, problem.Category, problem.Slug, problem.FunctionName)
 }
 
 func solutionTemplate(problem problems.Problem) string {
+	functionName := problem.FunctionName
+	if functionName == "" || functionName == "TODO" {
+		functionName = "solution"
+	}
+
 	return fmt.Sprintf(`package solution
 
-// TODO: Implement solution for %s.
-`, problem.Title)
+// %s solves:
+// https://leetcode.com/problems/%s/
+func %s() {
+	// TODO: implement solution
+}
+`, functionName, problem.Slug, functionName)
 }
 
 func testTemplate(problem problems.Problem) string {
+	functionName := problem.FunctionName
+	if functionName == "" || functionName == "TODO" {
+		functionName = "solution"
+	}
+
 	return fmt.Sprintf(`package solution
 
 import "testing"
 
-func TestSolution(t *testing.T) {
+func Test%s(t *testing.T) {
 	t.Skip("TODO: add tests for %s")
 }
-`, problem.Title)
+`, exportedTestName(functionName), problem.Title)
 }
 
-func notesTemplate() string {
-	return `# Notes
+func exportedTestName(name string) string {
+	if name == "" {
+		return "Solution"
+	}
 
-## What I learned
-
-## Mistakes
-
-## Patterns
-`
+	return strings.ToUpper(name[:1]) + name[1:]
 }
 
 func metadataTemplate(problem problems.Problem) string {
@@ -110,4 +134,19 @@ func metadataTemplate(problem problems.Problem) string {
 	}
 
 	return string(data) + "\n"
+}
+
+func notesTemplate() string {
+	return `# Notes
+
+## First Thoughts
+
+## Pattern Recognition
+
+## Mistakes / Bugs
+
+## Final Explanation
+
+## What I Would Do Differently
+`
 }
