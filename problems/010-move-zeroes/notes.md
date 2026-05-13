@@ -1,7 +1,11 @@
 # Notes
 
-## What I learned
+## First Thoughts
 
-## Mistakes
+## Pattern Recognition
 
-## Patterns
+## Mistakes / Bugs
+
+## Final Explanation
+
+## What I Would Do Differently

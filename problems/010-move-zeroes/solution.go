@@ -1,3 +1,7 @@
 package solution
 
-// TODO: Implement solution for Move Zeroes.
+// moveZeroes solves:
+// https://leetcode.com/problems/move-zeroes/
+func moveZeroes() {
+	// TODO: implement solution
+}

@@ -1,25 +1,25 @@
 package problems
 
 type Problem struct {
-	Number       int
-	Title        string
-	Slug         string
-	Difficulty   string
-	Category     string
-	FunctionName string
+	Number       int    `json:"number"`
+	Title        string `json:"title"`
+	Slug         string `json:"slug"`
+	Difficulty   string `json:"difficulty"`
+	Category     string `json:"category"`
+	FunctionName string `json:"function_name"`
 }
 
 var LeetCode75 = []Problem{
 	{1, "Merge Strings Alternately", "merge-strings-alternately", "Easy", "Array / String", "mergeAlternately"},
 	{2, "Greatest Common Divisor of Strings", "greatest-common-divisor-of-strings", "Easy", "Array / String", "gcdOfStrings"},
 	{3, "Kids With the Greatest Number of Candies", "kids-with-the-greatest-number-of-candies", "Easy", "Array / String", "kidsWithCandies"},
-	{4, "Can Place Flowers", "can-place-flowers", "Easy", "Array / String", "TODO"},
-	{5, "Reverse Vowels of a String", "reverse-vowels-of-a-string", "Easy", "Array / String", "TODO"},
-	{6, "Reverse Words in a String", "reverse-words-in-a-string", "Medium", "Array / String", "TODO"},
-	{7, "Product of Array Except Self", "product-of-array-except-self", "Medium", "Array / String", "TODO"},
-	{8, "Increasing Triplet Subsequence", "increasing-triplet-subsequence", "Medium", "Array / String", "TODO"},
-	{9, "String Compression", "string-compression", "Medium", "Array / String", "TODO"},
-	{10, "Move Zeroes", "move-zeroes", "Easy", "Two Pointers", "TODO"},
+	{4, "Can Place Flowers", "can-place-flowers", "Easy", "Array / String", "canPlaceFlowers"},
+	{5, "Reverse Vowels of a String", "reverse-vowels-of-a-string", "Easy", "Array / String", "reverseVowels"},
+	{6, "Reverse Words in a String", "reverse-words-in-a-string", "Medium", "Array / String", "reverseWords"},
+	{7, "Product of Array Except Self", "product-of-array-except-self", "Medium", "Array / String", "productExceptSelf"},
+	{8, "Increasing Triplet Subsequence", "increasing-triplet-subsequence", "Medium", "Array / String", "increasingTriplet"},
+	{9, "String Compression", "string-compression", "Medium", "Array / String", "compress"},
+	{10, "Move Zeroes", "move-zeroes", "Easy", "Two Pointers", "moveZeroes"},
 	{11, "Is Subsequence", "is-subsequence", "Easy", "Two Pointers", "TODO"},
 	{12, "Container With Most Water", "container-with-most-water", "Medium", "Two Pointers", "TODO"},
 	{13, "Max Number of K-Sum Pairs", "max-number-of-k-sum-pairs", "Medium", "Two Pointers", "TODO"},

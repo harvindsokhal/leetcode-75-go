@@ -1,4 +1,4 @@
-# Move Zeroes
+# 010. Move Zeroes
 
 ## Difficulty
 Easy
@@ -9,12 +9,24 @@ Two Pointers
 ## Link
 https://leetcode.com/problems/move-zeroes/
 
-## Problem
-TODO: Add problem summary.
+## Function
+moveZeroes
+
+## Problem Summary
+TODO: Summarise the problem in your own words.
+
+## Examples
+TODO: Add examples from LeetCode.
 
 ## Approach
-TODO: Write your thinking here.
+TODO: Explain your thinking before coding.
+
+## Edge Cases
+- TODO
 
 ## Complexity
 Time:
 Space:
+
+## Reflection
+What did I learn?
